@@ -2,7 +2,13 @@ import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@ang
 import { CommonModule } from '@angular/common';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
-import 'videojs-hls-quality-selector';
+
+// Import quality level helper and the menu plugin
+import 'videojs-contrib-quality-levels';
+import qualityMenu from 'videojs-contrib-quality-menu';
+
+// Register the plugin with Video.js
+videojs.registerPlugin('qualityMenu', qualityMenu);
 
 @Component({
   selector: 'app-video-player',
@@ -13,8 +19,7 @@ import 'videojs-hls-quality-selector';
 })
 export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('videoPlayer', { static: true }) videoElementRef!: ElementRef;
-
-  videoUrl: string = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+  videoUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
   player: any;
 
   ngAfterViewInit(): void {
@@ -23,11 +28,29 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       fluid: true,
       autoplay: false,
       responsive: true,
+      controlBar: {
+        children: [
+          'playToggle',
+          'volumePanel',
+          'currentTimeDisplay',
+          'timeDivider',
+          'durationDisplay',
+          'progressControl',
+          'remainingTimeDisplay',
+          'playbackRateMenuButton',
+          'pictureInPictureToggle',
+          'fullscreenToggle'
+        ]
+      }
     });
 
-    // ✅ This adds the Quality button
-    this.player.hlsQualitySelector({
-      displayCurrentQuality: true
+    this.player.ready(() => {
+      this.player.qualityMenu({
+        defaultResolution: null,
+        sdBitrateLimit: 2000000,
+        useResolutionLabels: true,
+        resolutionLabelBitrates: false
+      });
     });
   }
 
