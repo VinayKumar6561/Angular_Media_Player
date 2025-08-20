@@ -25,6 +25,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.player = videojs(this.videoElementRef.nativeElement, {
       controls: true,
+       playbackRates: [0.5, 1, 1.25, 1.5, 2],
       fluid: true,
       autoplay: false,
       responsive: true,
