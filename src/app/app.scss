@@ -1,0 +1,32 @@
+.active-link {
+  font-weight: bold;
+  border: #1976d2;
+  color: #1976d2; /* Material blue */
+}
+mat-sidenav {
+  background-color: #0c0101 !important;
+}
+::ng-deep mat-sidenav .mat-mdc-list-item .mdc-list-item__primary-text {
+  color: white !important;
+  
+}
+/* Remove rounding from sidenav */
+::ng-deep .mat-drawer,
+::ng-deep .mat-sidenav {
+  border-radius: 0 !important;
+  box-shadow: none !important; /* optional: remove drop shadow */
+}
+
+::ng-deep mat-sidenav {
+  width: 200px !important;
+}
+::ng-deep .mat-sidenav-container .mat-mdc-list-item:hover {
+  background-color: white !important;
+  
+}
+
+/* Hover text color */
+::ng-deep .mat-sidenav-container .mat-mdc-list-item:hover .mat-mdc-list-item-title,
+::ng-deep .mat-sidenav-container .mat-mdc-list-item:hover .mat-mdc-list-item-unscoped-content {
+  color: black !important;
+}
