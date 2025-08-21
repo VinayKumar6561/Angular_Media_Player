@@ -25,7 +25,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
-
+      debugger
       // Call backend API
       this.authService.login(username, password).subscribe({
         next: (res) => {
