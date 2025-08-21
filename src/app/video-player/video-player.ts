@@ -6,7 +6,7 @@ import 'video.js/dist/video-js.css';
 // Import quality level helper and the menu plugin
 import 'videojs-contrib-quality-levels';
 import qualityMenu from 'videojs-contrib-quality-menu';
-
+// import { AuthService } from '../services/auth'; 
 // Register the plugin with Video.js
 videojs.registerPlugin('qualityMenu', qualityMenu);
 
@@ -22,7 +22,18 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   videoUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
   player: any;
 
+  // The video file name you want to stream
+  videoFileName = 'video1400597203.mp4';
+  
+  // The base URL for your streaming endpoint
+  streamBaseUrl = 'http://172.17.2.22:8080/streaming/stream';
+
+  // constructor(private authService: AuthService) { } 
   ngAfterViewInit(): void {
+
+     const streamUrl = `${this.streamBaseUrl}/${this.videoFileName}`;
+    // const authToken = this.authService.getToken();
+
     this.player = videojs(this.videoElementRef.nativeElement, {
       controls: true,
        playbackRates: [0.5, 1, 1.25, 1.5, 2],
@@ -43,6 +54,12 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
           'fullscreenToggle'
         ]
       }
+    });
+
+     this.player.src({
+      src: streamUrl,
+      type: 'video/mp4',
+     
     });
 
     this.player.ready(() => {
